@@ -46,12 +46,12 @@ Legend:
 
 | Client library | Language | <img width="20" src="assets/images/Ethereum.png"> | since | <img width="20" src="assets/images/Celo.jpg"> | since | Comment |
 |---|:---:|:---:|:---:|:---|---|---|
-| `viem` | TS/JS | ✅ | | ✅ | >[1.19.5][1] | --- | 
-| `ethers` | TS/JS | ✅ | |  ❌ | | Support via fork in <br> `celo-ethers-wrapper` | 
-| `celo-ethers-wrapper` | TS/JS | ✅ | | ✅ | >[2.0.0](https://github.com/celo-tools/celo-ethers-wrapper/releases/tag/2.0.0) | --- |
-| `web3js` | TS/JS | ✅ | |  ❌ | | Support via fork in  <br> `contractkit` |
-| `contractkit` | TS/JS | ✅ |  | ✅ | >[5.0.0](https://github.com/celo-org/celo-monorepo/releases/tag/v5.0) | --- |
-| `Web3j` | Java | ✅ | |  ❌ |  | --- |
+| [`viem`](https://www.npmjs.com/package/viem) | TS/JS | ✅ | | ✅ | >[1.19.5][1] | --- | 
+| [`ethers`](https://www.npmjs.com/package/ethers) | TS/JS | ✅ | |  ❌ | | [Discussion](https://github.com/ethers-io/ethers.js/issues/3747) with maintainer.<br>Currently only supported via<br>[`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | 
+| [`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | TS/JS | ✅ | | ✅ | >[2.0.0](https://github.com/celo-tools/celo-ethers-wrapper/releases/tag/2.0.0) | --- |
+| [`web3`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Currently only supported via<br> [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) |
+| [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) | TS/JS | ✅ |  | ✅ | >[5.0.0](https://github.com/celo-org/celo-monorepo/releases/tag/v5.0) | --- |
+| [`Web3j`](https://docs.web3j.io/) | Java | ✅ | |  ❌ |  | --- |
 | `rust-ethers` | Rust |  ✅ | | ❌ | | --- |
 | `brownie` | Python |  ✅ | | ❌ | | --- |
 
