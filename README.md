@@ -16,12 +16,14 @@ and a single Celo transaction type.
 
 | Chain | Transaction type  | # | Specification | Recommended | Support | Comment |
 |---|---|---|---|---|---|---|
-| <img width="20" src="assets/images/Celo.jpg"> | Dynamic fee transaction v2 | `123` | [CIP-64](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md) | ✅ | Active 🟢 | Supports paying gas in custom fee currencies |
-| <img width="20" src="assets/images/Ethereum.png"> | Dynamic fee transaction | `2` | [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) ([CIP-42](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0042.md)) | ✅ | Active 🟢 | Typical Ethereum transaction |
+| <img width="20" src="assets/images/Celo.jpg"> | Celo Denominated Fee Transaction | `122` | [CIP-66](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0066.md) | ✅ | Active 🟢 | Supports paying gas in whitelisted fee tokens while denominating the fee per gas in celo  |
+| <img width="20" src="assets/images/Celo.jpg"> | Dynamic fee transaction  | `123` | [CIP-64](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md) | ✅ | Active 🟢 | Supports paying gas in custom fee currencies |
+| <img width="20" src="assets/images/Ethereum.png"> | Dynamic fee transaction | `2` | [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) | ✅ | Active 🟢 | Typical Ethereum transaction |
 | <img width="20" src="assets/images/Ethereum.png"> | Access list transaction | `1` | [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) ([CIP-35](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0035.md)) | ❌ | Active 🟢 | Does not support dynamically changing _base fee_ per gas  | 
 | <img width="20" src="assets/images/Ethereum.png"> | Legacy transaction | `0` | [Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf) ([CIP-35](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0035.md)) | ❌ | Active 🟢 | Does not support dynamically changing _base fee_ per gas |
 
-### Scheduled for deprecation on Celo
+
+### Sunset Transaction types on Celo
 
 | Chain | Transaction type  | # | Specification | Recommended | Support | Comment |
 |---|---|---|---|---|---|---|
@@ -33,7 +35,7 @@ The stages of support are:
 -   **Active support** 🟢: the transaction type is supported and recommended for use.
 -   **Security support** 🟠: the transaction type is supported but not recommended for use
     because it might be deprecated in the future.
--   **Deprecated** 🔴: the transaction type is not supported and not recommended for use.
+-   **Sunset** 🔴: the transaction type was supported in the past but will fail now.
 
 ### Client library support
 
@@ -203,7 +205,7 @@ they are commonly referred to as "type 0" transactions.
 > parameters: `feecurrency`, `gatewayfeerecipient`, and `gatewayfee`.
 
 > **Warning**
-> This transaction type is scheduled for deprecation. A deprecation warning was published in the 
+> This transaction type has been sunset. A deprecation warning was published in the 
 > [Gingerbread hard fork](https://github.com/celo-org/celo-proposals/blob/8260b49b2ec9a87ded6727fec7d9104586eb0752/CIPs/cip-0062.md#deprecation-warning)
 > on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499).
 
@@ -224,7 +226,7 @@ they are commonly referred to as "type 0" transactions.
 > parameters: `feecurrency`, `gatewayfeerecipient`, and `gatewayfee`.
 
 > **Warning**
-> This transaction type is scheduled for deprecation. A deprecation warning was published in the 
+> This transaction type has been sunset. Do not use. A deprecation warning was published in the 
 > [Gingerbread hard fork](https://github.com/celo-org/celo-proposals/blob/8260b49b2ec9a87ded6727fec7d9104586eb0752/CIPs/cip-0062.md#deprecation-warning)
 > on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499).
 
@@ -256,6 +258,22 @@ they are commonly referred to as "type 0" transactions.
     on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499)
     as specified in 
     [CIP-64: New Transaction Type: Celo Dynamic Fee v2](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md)
+
+### <img width="14" src="assets/images/Celo.jpg"> Celo Denominated Fee Token Transaction (`122`)
+
+> **NOTE**
+> This transaction is not compatible with Ethereum and has two Celo-specific 
+> parameters: `feecurrency` & `maxFeeInFeeCurrency`
+
+-   This transaction is defined as follows:
+
+    ```
+    0x7a || rlp([chainId, nonce, maxPriorityFeePerGas, maxFeePerGas, gasLimit, to, value, data, accessList, feeCurrency, maxFeeInFeeCurrency, signatureYParity, signatureR, signatureS]).
+    ```
+
+-   It was introduced on Celo during the L2 Transition as specified in [CIP-66: New Transaction Type: Celo Denominated Fees](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0066.md) 
+
+The maxFeeInFeeCurrency is a limit and as such can be as high as the sender is comfortable with. In practice it should be calculated by multiplying the gas limit by the maxFeePerGas and then converting this Celo denominated value into one denominated in the token paying the fee. The conversion rate can be obtained by querying the `getExchangeRate` view on the SortedOracle contract. This returns a tuple (numerator, denominator). Use `gas * maxFeePerGas * numerator / denominator`
 
 
 ## Demo usage
