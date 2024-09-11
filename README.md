@@ -16,12 +16,13 @@ and a single Celo transaction type.
 
 | Chain | Transaction type  | # | Specification | Recommended | Support | Comment |
 |---|---|---|---|---|---|---|
-| <img width="20" src="assets/images/Celo.jpg"> | Dynamic fee transaction v2 | `123` | [CIP-64](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md) | ✅ | Active 🟢 | Supports paying gas in custom fee currencies |
-| <img width="20" src="assets/images/Ethereum.png"> | Dynamic fee transaction | `2` | [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) ([CIP-42](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0042.md)) | ✅ | Active 🟢 | Typical Ethereum transaction |
+| <img width="20" src="assets/images/Celo.jpg"> | Dynamic fee transaction  | `123` | [CIP-64](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md) | ✅ | Active 🟢 | Supports paying gas in custom fee currencies |
+| <img width="20" src="assets/images/Ethereum.png"> | Dynamic fee transaction | `2` | [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) | ✅ | Active 🟢 | Typical Ethereum transaction |
 | <img width="20" src="assets/images/Ethereum.png"> | Access list transaction | `1` | [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) ([CIP-35](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0035.md)) | ❌ | Active 🟢 | Does not support dynamically changing _base fee_ per gas  | 
 | <img width="20" src="assets/images/Ethereum.png"> | Legacy transaction | `0` | [Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf) ([CIP-35](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0035.md)) | ❌ | Active 🟢 | Does not support dynamically changing _base fee_ per gas |
 
-### Scheduled for deprecation on Celo
+
+### Sunset Transaction types on Celo
 
 | Chain | Transaction type  | # | Specification | Recommended | Support | Comment |
 |---|---|---|---|---|---|---|
@@ -33,7 +34,7 @@ The stages of support are:
 -   **Active support** 🟢: the transaction type is supported and recommended for use.
 -   **Security support** 🟠: the transaction type is supported but not recommended for use
     because it might be deprecated in the future.
--   **Deprecated** 🔴: the transaction type is not supported and not recommended for use.
+-   **Sunset** 🔴: the transaction type was supported in the past but will fail now.
 
 ### Client library support
 
@@ -49,7 +50,8 @@ Legend:
 | [`viem`](https://www.npmjs.com/package/viem) | TS/JS | ✅ | | ✅ | >[1.19.5][1] | --- | 
 | [`ethers`](https://www.npmjs.com/package/ethers) | TS/JS | ✅ | |  ❌ | | [Discussion](https://github.com/ethers-io/ethers.js/issues/3747) with maintainer.<br>Currently only supported via<br>[`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | 
 | [`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | TS/JS | ✅ | | ✅ | >[2.0.0](https://github.com/celo-tools/celo-ethers-wrapper/releases/tag/2.0.0) | --- |
-| [`web3`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Currently only supported via<br> [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) |
+| [`web3 v1`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Only supported via<br> [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) |
+| [`web3 v4`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Use [@celo/web3-plugin-transaction-types](https://github.com/celo-org/web3-plugin-transaction-types) |
 | [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) | TS/JS | ✅ |  | ✅ | >[5.0.0](https://github.com/celo-org/celo-monorepo/releases/tag/v5.0) | --- |
 | [`Web3j`](https://docs.web3j.io/) | Java | ✅ | |  ❌ |  | --- |
 | `rust-ethers` | Rust |  ✅ | | ❌ | | --- |
@@ -203,7 +205,7 @@ they are commonly referred to as "type 0" transactions.
 > parameters: `feecurrency`, `gatewayfeerecipient`, and `gatewayfee`.
 
 > **Warning**
-> This transaction type is scheduled for deprecation. A deprecation warning was published in the 
+> This transaction type has been sunset. A deprecation warning was published in the 
 > [Gingerbread hard fork](https://github.com/celo-org/celo-proposals/blob/8260b49b2ec9a87ded6727fec7d9104586eb0752/CIPs/cip-0062.md#deprecation-warning)
 > on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499).
 
@@ -224,7 +226,7 @@ they are commonly referred to as "type 0" transactions.
 > parameters: `feecurrency`, `gatewayfeerecipient`, and `gatewayfee`.
 
 > **Warning**
-> This transaction type is scheduled for deprecation. A deprecation warning was published in the 
+> This transaction type has been sunset. Do not use. A deprecation warning was published in the 
 > [Gingerbread hard fork](https://github.com/celo-org/celo-proposals/blob/8260b49b2ec9a87ded6727fec7d9104586eb0752/CIPs/cip-0062.md#deprecation-warning)
 > on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499).
 
