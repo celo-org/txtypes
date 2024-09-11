@@ -16,7 +16,6 @@ and a single Celo transaction type.
 
 | Chain | Transaction type  | # | Specification | Recommended | Support | Comment |
 |---|---|---|---|---|---|---|
-| <img width="20" src="assets/images/Celo.jpg"> | Celo Denominated Fee Transaction | `122` | [CIP-66](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0066.md) | ✅ | Active 🟢 | Supports paying gas in whitelisted fee tokens while denominating the fee per gas in celo  |
 | <img width="20" src="assets/images/Celo.jpg"> | Dynamic fee transaction  | `123` | [CIP-64](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md) | ✅ | Active 🟢 | Supports paying gas in custom fee currencies |
 | <img width="20" src="assets/images/Ethereum.png"> | Dynamic fee transaction | `2` | [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) | ✅ | Active 🟢 | Typical Ethereum transaction |
 | <img width="20" src="assets/images/Ethereum.png"> | Access list transaction | `1` | [EIP-2930](https://eips.ethereum.org/EIPS/eip-2930) ([CIP-35](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0035.md)) | ❌ | Active 🟢 | Does not support dynamically changing _base fee_ per gas  | 
@@ -51,7 +50,8 @@ Legend:
 | [`viem`](https://www.npmjs.com/package/viem) | TS/JS | ✅ | | ✅ | >[1.19.5][1] | --- | 
 | [`ethers`](https://www.npmjs.com/package/ethers) | TS/JS | ✅ | |  ❌ | | [Discussion](https://github.com/ethers-io/ethers.js/issues/3747) with maintainer.<br>Currently only supported via<br>[`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | 
 | [`@celo-tools/celo-ethers-wrapper`](https://www.npmjs.com/package/@celo-tools/celo-ethers-wrapper) | TS/JS | ✅ | | ✅ | >[2.0.0](https://github.com/celo-tools/celo-ethers-wrapper/releases/tag/2.0.0) | --- |
-| [`web3`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Currently only supported via<br> [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) |
+| [`web3 v1`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Only supported via<br> [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) |
+| [`web3 v4`](https://www.npmjs.com/package/web3) | TS/JS | ✅ | |  ❌ | | Use [@celo/web3-plugin-transaction-types](https://github.com/celo-org/web3-plugin-transaction-types) |
 | [`@celo/contractkit`](https://www.npmjs.com/package/@celo/contractkit) | TS/JS | ✅ |  | ✅ | >[5.0.0](https://github.com/celo-org/celo-monorepo/releases/tag/v5.0) | --- |
 | [`Web3j`](https://docs.web3j.io/) | Java | ✅ | |  ❌ |  | --- |
 | `rust-ethers` | Rust |  ✅ | | ❌ | | --- |
@@ -258,22 +258,6 @@ they are commonly referred to as "type 0" transactions.
     on [Sep 26, 2023](https://forum.celo.org/t/mainnet-alfajores-gingerbread-hard-fork-release-sep-26-17-00-utc/6499)
     as specified in 
     [CIP-64: New Transaction Type: Celo Dynamic Fee v2](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0064.md)
-
-### <img width="14" src="assets/images/Celo.jpg"> Celo Denominated Fee Token Transaction (`122`)
-
-> **NOTE**
-> This transaction is not compatible with Ethereum and has two Celo-specific 
-> parameters: `feecurrency` & `maxFeeInFeeCurrency`
-
--   This transaction is defined as follows:
-
-    ```
-    0x7a || rlp([chainId, nonce, maxPriorityFeePerGas, maxFeePerGas, gasLimit, to, value, data, accessList, feeCurrency, maxFeeInFeeCurrency, signatureYParity, signatureR, signatureS]).
-    ```
-
--   It was introduced on Celo during the L2 Transition as specified in [CIP-66: New Transaction Type: Celo Denominated Fees](https://github.com/celo-org/celo-proposals/blob/master/CIPs/cip-0066.md) 
-
-The maxFeeInFeeCurrency is a limit and as such can be as high as the sender is comfortable with. In practice it should be calculated by multiplying the gas limit by the maxFeePerGas and then converting this Celo denominated value into one denominated in the token paying the fee. The conversion rate can be obtained by querying the `getExchangeRate` view on the SortedOracle contract. This returns a tuple (numerator, denominator). Use `gas * maxFeePerGas * numerator / denominator`
 
 
 ## Demo usage
