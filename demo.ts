@@ -90,29 +90,29 @@ async function demoFeeCurrencyTransactionType() {
     printFormattedTransactionReceipt(transactionReceipt);
 }
 
-/**
- * Transaction type: 122 (0x7a)
- * Name: "Celo Denominated Easy Fee Transaction"
- * Description: Celo dynamic fee transaction (with custom fee currency)
- */
-async function demoCeloDenominatedFeeCurrencyTransactionType() {
-    console.log(`Initiating Celo denominated fee currency transaction...`);
-    const transactionHash = await walletClient.sendTransaction({
-        account, // Sender
-        to: "0x70997970c51812dc3a010c7d01b50e0d17dc79c8", // Recipient (illustrative address)
-        value: parseEther("0.01"), // 0.01 CELO
-        feeCurrency: "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1", // cUSD fee currency
-        maxFeePerGas: parseGwei("10"), // Denominated in CELO but paid in the fee currency 
-        maxPriorityFeePerGas: parseGwei("10"), // Denominated in CELO but paid in the fee currency
-        maxFeeInFeeCurrency:  parseGwei("10") // Calculated as maxFeePerGas * gasLimit * conversionRateFromCELOtoToken
-    });
+// /**
+//  * Transaction type: 122 (0x7a)
+//  * Name: "Celo Denominated Easy Fee Transaction"
+//  * Description: Celo dynamic fee transaction (with custom fee currency)
+//  */
+// async function demoCeloDenominatedFeeCurrencyTransactionType() {
+//     console.log(`Initiating Celo denominated fee currency transaction...`);
+//     const transactionHash = await walletClient.sendTransaction({
+//         account, // Sender
+//         to: "0x70997970c51812dc3a010c7d01b50e0d17dc79c8", // Recipient (illustrative address)
+//         value: parseEther("0.01"), // 0.01 CELO
+//         feeCurrency: "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1", // cUSD fee currency
+//         maxFeePerGas: parseGwei("10"), // Denominated in CELO but paid in the fee currency 
+//         maxPriorityFeePerGas: parseGwei("10"), // Denominated in CELO but paid in the fee currency
+//         maxFeeInFeeCurrency:  parseGwei("10") // Calculated as maxFeePerGas * gasLimit * conversionRateFromCELOtoToken
+//     });
 
-    const transactionReceipt = await publicClient.waitForTransactionReceipt({
-        hash: transactionHash,
-    });
+//     const transactionReceipt = await publicClient.waitForTransactionReceipt({
+//         hash: transactionHash,
+//     });
 
-    printFormattedTransactionReceipt(transactionReceipt);
-}
+//     printFormattedTransactionReceipt(transactionReceipt);
+// }
 
 function printFormattedTransactionReceipt(transactionReceipt: any) {
 
@@ -153,7 +153,6 @@ async function runDemosSequentially() {
     await demoLegacyTransactionType();
     await demoDynamicFeeTransactionType();
     await demoFeeCurrencyTransactionType();
-    await demoCeloDenominatedFeeCurrencyTransactionType();
 }
 
 // Run the demos sequentially
